@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timi Designs — Portfolio</title>
+  <meta name="description" content="Timi Design UX/UI Designer. Building accessible, delightful apps and experiences." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --bg:#001f3f;
+      --muted:#cfe9ff;
+      --accent:#00c3ff;
+      --card: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.06);
+      --radius:12px;
+      --max-width:1200px;
+      --gap:24px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg,var(--bg) 0%, #022842 100%);
+      color:#eaf6ff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Site container */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:18px;min-height:100vh}
+
+    /* Header */
+    header{
+      position:fixed;left:0;right:0;top:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 40px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.08));
+      backdrop-filter: blur(6px);
+      z-index:999;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+    .logo{
+      font-weight:800;font-size:22px;text-decoration:none;
+      background:linear-gradient(90deg,var(--accent),#ff6ec4);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      display:flex;align-items:center;gap:10px;
+    }
+    .logo small{font-weight:600;color:#fff;font-size:12px; margin-left:6px; opacity:0.9}
+
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{
+      color: #dceffc; text-decoration:none; font-weight:600; font-size:15px;
+      padding:8px 10px;border-radius:8px;transition:all .18s ease;
+    }
+    nav a:hover, nav a.active{color:#001f3f;background:var(--accent)}
+
+    /* Hero */
+    .hero{
+      padding-top:120px;
+      display:grid;grid-template-columns:1fr 360px;gap:var(--gap);align-items:center;
+    }
+    .hero-left{max-width:720px}
+    .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--muted);font-weight:600;margin-bottom:18px;}
+    h1{font-size:44px;line-height:1.02;margin:0 0 12px}
+    .lead{color:rgba(234,246,255,0.88);font-size:18px;margin-bottom:20px}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:10px;
+      font-weight:700;background:var(--accent);color:#001f3f;border:none;cursor:pointer;text-decoration:none;
+      box-shadow:0 8px 30px rgba(0,195,255,0.12);transition:transform .18s ease,box-shadow .18s ease;
+    }
+    .btn.secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.06)}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,195,255,0.12)}
+    .social-row{margin-top:12px;display:flex;gap:12px}
+
+    /* Profile card */
+    .profile-card{
+      background:var(--card);
+      padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;gap:12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+    .avatar{width:200px;height:200px;border-radius:20px;overflow:hidden;border:4px solid rgba(255,255,255,0.06)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .profile-name{font-weight:800;font-size:20px}
+    .profile-role{font-size:13px;color:var(--muted)}
+
+    /* Portfolio */
+    .section{margin-top:48px}
+    .section h2{font-size:22px;margin-bottom:16px}
+    .grid{
+      display:grid;gap:20px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .card{
+      background:var(--glass);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.35);
+      transition:transform .24s ease,box-shadow .24s ease;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,0.5)}
+    .card-media{width:100%;height:180px;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .card-media img, .card-media video{width:100%;height:100%;object-fit:cover;display:block}
+    .card-body{padding:16px}
+    .card-body h3{margin:0 0 8px;font-size:18px}
+    .card-body p{margin:0;color:rgba(234,246,255,0.85);font-size:14px}
+
+    /* Modal / Lightbox */
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:2000;
+    }
+    .modal.open{display:flex}
+    .modal .inner{max-width:980px;width:100%;background:#061c2b;border-radius:12px;padding:16px}
+    .modal video,.modal img{width:100%;height:auto;display:block;border-radius:8px}
+    .close-btn{position:absolute;top:18px;right:24px;color:#fff;font-size:22px;background:transparent;border:none;cursor:pointer}
+
+    /* Contact */
+    .contact-card{background:var(--card);padding:20px;border-radius:12px;display:grid;gap:12px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input,textarea{
+      width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#eaf6ff;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .muted{color:rgba(234,246,255,0.7);font-size:14px}
+
+    /* footer */
+    footer{padding:40px 0;text-align:center;color:rgba(234,246,255,0.7);font-size:14px}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr; padding-top:110px}
+      header{padding:14px 18px}
+      .avatar{width:160px;height:160px}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="#home" aria-label="Timi Designs home">Timi Designs <small>Designs</small></a>
+
+    <nav aria-label="Main navigation">
+      <a href="#home" class="active">Home</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="home" role="main">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="intro">
+      <div class="hero-left">
+        <div class="eyebrow">UX • UI • Product</div>
+        <h1 id="intro">Hi, I’m <strong>Timi</strong> — I design accessible product experiences.</h1>
+        <p class="lead">I craft delightful, usable apps for tech & retail. I run creative workshops and design with empathy & data.</p>
+
+        <div class="hero-cta">
+          <a class="btn" href="#contact"><i class="fa-solid fa-phone"></i> Hire me</a>
+          <a class="btn secondary" href="#work">View Work</a>
+        </div>
+
+        <div class="social-row muted" aria-hidden="false" style="margin-top:14px">
+          <a aria-label="Twitter" style="color:inherit;text-decoration:none" href="https://twitter.com/yourhandle" target="_blank" rel="noopener"><i class="fab fa-x-twitter" style="font-size:18px;color:var(--accent)"></i></a>
+          <a aria-label="LinkedIn" style="color:inherit;text-decoration:none;margin-left:12px" href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener"><i class="fab fa-linkedin-in" style="font-size:18px;color:#0A66C2"></i></a>
+          <a aria-label="Facebook" style="color:inherit;text-decoration:none;margin-left:12px" href="https://facebook.com/yourhandle" target="_blank" rel="noopener"><i class="fab fa-facebook-f" style="font-size:18px;color:#1877F2"></i></a>
+        </div>
+      </div>
+
+      <!-- Profile card -->
+      <aside class="profile-card" aria-label="Profile card">
+        <div class="avatar" role="img" aria-label="Timi profile image">
+          <!-- Replace the image path below with your uploaded file -->
+          <img src="" alt="Timi profile photo" loading="lazy" width="200" height="200">
+        </div>
+        <div style="text-align:center">
+          <div class="profile-name">Timi Olowoyo</div>
+          <div class="profile-role muted">UX / Product Designer</div>
+          <div style="margin-top:12px;font-size:13px">
+            <a class="btn" href="#contact" style="padding:10px 16px;font-size:14px">Get in touch</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- WORK / PORTFOLIO -->
+    <section id="work" class="section" aria-labelledby="work-heading">
+      <h2 id="work-heading">Selected Work</h2>
+      <div class="grid" role="list">
+        <!-- Project 1 (image) -->
+        <article class="card" role="listitem">
+          <button class="card-media" aria-label="Open project UX Design Showcase" data-media="assets/project1.jpg">
+            <img src="images/Annotation 2025-09-05 084140.png "" alt="">
+                 
+                 
+                 
+          </button>
+          <div class="card-body">
+            <h3>UX Design Showcase</h3>
+            <p>High-level UX process and research for a retail app redesign.</p>
+          </div>
+        </article>
+
+        <!-- Project 2 (image) -->
+        <article class="card" role="listitem">
+          <button class="card-media" aria-label="Open project Interaction Design" data-media="assets/project2.jpg">
+            <img src="images/White and Black Simple Light Home Page Wireframe Website UI Prototype.png" alt="">
+                 
+          </button>
+          <div class="card-body">
+            <h3>Home designing</h3>
+            <p>Micro-interactions and motion design that improved task completion rates.</p>
+          </div>
+        </article>
+
+        <!-- Project 3 (video) -->
+        <article class="card" role="listitem">
+          <button class="card-media" aria-label="Open prototype video" data-media="assets/prototype-demo.mp4" data-type="video">
+            <!-- poster image or fallback -->
+            <img src="images/Grey Modern SImple Remote WorkiPrototype.png" alt="">
+          </button>
+          <div class="card-body">
+            <h3>Business web development </h3>
+            <p>Interactive clickable prototype with flows and animations.</p>
+          </div>
+        </article>
+
+        <!-- Add more project cards as needed -->
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start">
+        <div>
+          <p class="muted">I focus on designing accessible, inclusive products that scale. I combine research, UX strategy, and interface design to deliver measurable outcomes for teams and users.</p>
+          <p class="muted">Tools: Figma, FigJam, Miro, Adobe Suite, HTML/CSS, basic React. Available for freelance & full-time collaborations.</p>
+        </div>
+        <div>
+          <div class="contact-card">
+            <div class="muted">Email</div>
+            <div><a href="mailto:timilehinolowoyo09@gmail.com" style="color:var(--accent)">timilehinolowoyo09@gmail.com</a></div>
+            <div class="muted">Phone</div>
+            <div><a href="tel:+2347036859997" style="color:var(--accent)">+234 703 685 9997</a></div>
+            <div class="muted" style="margin-top:6px">Based in EKITI STATE • Open to remote work</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+        <form id="contactForm" class="contact-card" aria-label="Contact form">
+          <label class="muted">Your name
+            <input type="text" name="name" required placeholder="Your name">
+          </label>
+          <label class="muted">Email
+            <input type="email" name="email" required placeholder="you@domain.com">
+          </label>
+          <label class="muted">Message
+            <textarea name="message" required placeholder="Tell me about your project..."></textarea>
+          </label>
+          <div style="display:flex;gap:10px;justify-content:flex-start">
+            <button class="btn" type="submit">Send message</button>
+            <a href="mailto:timilehinolowoyo09@gmail.com" class="btn secondary" style="align-self:center">Email me</a>
+          </div>
+          <div id="formStatus" class="muted" aria-live="polite" style="margin-top:8px"></div>
+        </form>
+
+        <aside class="contact-card">
+          <h3 style="margin:0 0 8px">Let's work together</h3>
+          <p class="muted">Tell me about your project: timeline, team size, and goals. I’ll get back within 48 hours.</p>
+          <div style="margin-top:12px">
+            <strong>Availability:</strong>
+            <div class="muted">Open for freelance & remote roles</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      <div style="max-width:var(--max-width);margin:0 auto;padding:18px;text-align:center">
+        © <strong>Timi Olowoyo</strong> — Built with care • <a href="#top" style="color:var(--accent)">Back to top</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close-btn" aria-label="Close modal">&times;</button>
+    <div class="inner" role="document">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Simple interactions: modal lightbox, nav active on scroll, basic form handler
+    (function(){
+      // Modal
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modalContent');
+      const closeBtn = modal.querySelector('.close-btn');
+
+      function openModal(html, type){
+        modalContent.innerHTML = '';
+        if(type==='video'){
+          const v = document.createElement('video');
+          v.src = html;
+          v.controls = true;
+          v.autoplay = true;
+          v.style.maxHeight = '70vh';
+          v.playsInline = true;
+          modalContent.appendChild(v);
+        } else {
+          const img = document.createElement('img');
+          img.src = html;
+          img.alt = 'Project preview';
+          modalContent.appendChild(img);
+        }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      }
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        modalContent.innerHTML = '';
+      }
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+
+      // Attach to project buttons
+      document.querySelectorAll('.card .card-media').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const media = btn.dataset.media;
+          const type = btn.dataset.type;
+          openModal(media, type);
+        });
+      });
+
+      // Navbar active on scroll (simple)
+      const navLinks = document.querySelectorAll('nav a');
+      const sections = [...document.querySelectorAll('main section')];
+      const offset = 120;
+      function onScroll(){
+        const y = window.scrollY;
+        sections.forEach(sec=>{
+          const top = sec.offsetTop - offset;
+          const bottom = top + sec.offsetHeight;
+          const id = sec.id;
+          const link = document.querySelector('nav a[href="#'+id+'"]');
+          if(!link) return;
+          if(y >= top && y < bottom){
+            navLinks.forEach(n=>n.classList.remove('active'));
+            link.classList.add('active');
+          }
+        });
+      }
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+
+      // Basic contact form (no backend here) - demo only
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const data = new FormData(form);
+        // For real sites: send to your API or Netlify Forms / Formspree
+        status.textContent = 'Thanks — message sent (demo). Use an API to send real messages.';
+        form.reset();
+      });
+
+      // Accessibility: close modal with Escape
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+
+      // Prefetch: lazy load bigger images when user interacts (optional)
+      document.addEventListener('pointerdown', function prefetch(){
+        // Example: prefetch a few assets via Image()
+        const pre = ['assets/project1.jpg','assets/project2.jpg'];
+        pre.forEach(p=>{ const i=new Image(); i.src=p; });
+        document.removeEventListener('pointerdown', prefetch);
+      });
+    })();
+  </script>
+
+  <!-- Performance & SEO hints (not code) -->
+  <!--
+    1) Replace assets/* images with compressed WebP files and provide srcset for responsiveness.
+    2) Serve video at multiple resolutions, use poster images and lazy load.
+    3) Add analytics and sitemap on production.
+    4) Use a CDN; enable Brotli/gzip; set caching headers.
+    5) Add structured data (JSON-LD) for person/portfolio if desired.
+    6) For forms: wire to Netlify Forms, Formspree, or your backend API for real messages.
+  -->
+</body>
+</html>
+<!-- Login Overlay -->
+<div id="login-overlay">
+  <div class="login-box">
+    <h2>Welcome to <strong>Timi Design</strong></h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="validateLogin()">Login</button>
+    <p id="message" class="message"></p>
+  </div>
+
+  <!-- Floating Animated Circles -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+</div>
+
+<style>
+  /* Fullscreen Overlay */
+  #login-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #001f3f, #00c3ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  /* Floating Circles */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 10s infinite ease-in-out;
+  }
+  .circle:nth-child(2) { width: 150px; height: 150px; left: 20%; top: 10%; animation-duration: 12s; }
+  .circle:nth-child(3) { width: 200px; height: 200px; right: 15%; bottom: 20%; animation-duration: 15s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-40px) rotate(180deg); }
+  }
+
+  /* Login Box */
+  .login-box {
+    width: 360px;
+    padding: 40px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+
+  .login-box h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #00c3ff, #ff6ec4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s infinite alternate;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    animation: slideIn 0.9s ease forwards;
+  }
+
+  .login-box button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #00c3ff, #ff6ec4);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    animation: slideIn 1s ease forwards;
+  }
+  .login-box button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  }
+
+  .message { margin-top: 15px; font-size: 14px; }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 5px #00c3ff, 0 0 10px #ff6ec4; }
+    to { text-shadow: 0 0 20px #00c3ff, 0 0 30px #ff6ec4; }
+  }
+
+  /* Section reveal animations */
+  section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  function validateLogin() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
+
+    if (username === "timi" && password === "123") {
+      message.style.color = "lime";
+      message.textContent = "✅ Login Successful!";
+      setTimeout(() => {
+        document.getElementById("login-overlay").style.display = "none";
+      }, 1000);
+    } else {
+      message.style.color = "red";
+      message.textContent = "❌ Wrong username or password";
+    }
+  }
+
+  // Reveal sections on scroll
+  window.addEventListener("scroll", () => {
+    document.querySelectorAll("section").forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        sec.classList.add("show");
+      }
+    });
+  });
+</script>
+  
